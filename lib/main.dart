@@ -3,6 +3,7 @@ import 'package:mi_shop/pages/Home.dart';
 import 'package:mi_shop/pages/Category.dart';
 import 'package:mi_shop/pages/Cart.dart';
 import 'package:mi_shop/pages/Mine.dart';
+import 'package:mi_shop/pages/Product/Product.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() => runApp(MyApp());
@@ -15,7 +16,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: _title,
       debugShowCheckedModeBanner: false,
-      home: MyStatefulWidget(),
+      // home: MyStatefulWidget(),
+      home: Product(),
     );
   }
 }
