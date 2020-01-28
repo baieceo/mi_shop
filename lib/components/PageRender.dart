@@ -7,9 +7,11 @@ import 'package:mi_shop/components/ListTwoType2.dart';
 import 'package:mi_shop/components/ListTwoType3.dart';
 import 'package:mi_shop/components/ListTwoType13.dart';
 import 'package:mi_shop/components/ListActionTitle.dart';
+import 'package:mi_shop/components/CategoryTitle.dart';
+import 'package:mi_shop/components/CategoryGroup.dart';
 
 class PageRender extends StatefulWidget {
-  final Map data;
+  final List data;
   PageRender({Key key, this.data}) : super(key: key);
   @override
   createState() => new MyComponent();
@@ -20,17 +22,10 @@ class MyComponent extends State<PageRender> {
 
   @override
   Widget build(BuildContext context) {
-    List sections = List();
     List<Widget> components = List();
 
-    // 顶部分类
-    if (widget.data['data'] != null &&
-        widget.data['data']['sections'] != null) {
-      sections = widget.data['data']['sections'];
-    }
-
-    if (sections.length > 0) {
-      sections.forEach((section) {
+    if (widget.data.length > 0) {
+      widget.data.forEach((section) {
         // 轮播
         if (section['view_type'] == 'gallery') {
           components.add(new Gallery(items: section['body']['items']));
@@ -66,14 +61,24 @@ class MyComponent extends State<PageRender> {
           components.add(new ListTwoType13(data: section['body']));
         }
 
-        // 标题
+        // 列表标题
         if (section['view_type'] == 'list_action_title') {
           components.add(new ListActionTitle(data: section['body']));
+        }
+
+        // 分类标题
+        if (section['view_type'] == 'category_title') {
+          components.add(new CategoryTitle(data: section['body']));
+        }
+
+        // 分类组
+        if (section['view_type'] == 'category_group') {
+          components.add(new CategoryGroup(data: section['body']));
         }
       });
     }
 
-    if (widget.data['data'] != null) {
+    if (widget.data != null) {
       return Column(
         children: components,
       );

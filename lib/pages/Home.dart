@@ -26,69 +26,74 @@ class Page extends State<Home> {
     return layout(context);
   }
 
+  // 顶部栏
+  Widget topBar(BuildContext context) {
+    return new HeaderNav(
+      left: Container(
+        child: Image(
+          image: new AssetImage('images/logo.png'),
+          height: 15,
+        ),
+      ),
+      content: Container(
+        decoration: new BoxDecoration(
+          border: new Border.all(
+            width: 1,
+            color: Color(0xffe5e5e5),
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(2.0)),
+        ),
+        child: Scaffold(
+          body: Row(
+            children: <Widget>[
+              Container(
+                child: Icon(
+                  Icons.search,
+                  color: Color(0x4D000000),
+                  size: 3.0,
+                ),
+                margin: EdgeInsets.fromLTRB(5, 0, 3, 0),
+              ),
+              Expanded(
+                child: new TextField(
+                  decoration: new InputDecoration(
+                    hintText: '搜索商品名称',
+                    hintStyle: new TextStyle(
+                      fontSize: 13.0,
+                      color: Color(0x4D000000),
+                    ),
+                    fillColor: Color(0xffffffff),
+                    filled: true,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 4),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(3),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      right: Container(
+        child: Image(
+          image: new AssetImage('images/user.png'),
+          height: 18,
+        ),
+      ),
+    );
+  }
+
   Widget layout(BuildContext context) {
     return new MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: new Scaffold(
         body: Column(
           children: <Widget>[
             Expanded(
               flex: 0,
-              child: new HeaderNav(
-                left: Container(
-                  child: Image(
-                    image: new AssetImage('images/logo.png'),
-                    height: 15,
-                  ),
-                ),
-                content: Container(
-                  decoration: new BoxDecoration(
-                    border: new Border.all(
-                      width: 1,
-                      color: Color(0xffe5e5e5),
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(2.0)),
-                  ),
-                  child: Scaffold(
-                    body: Row(
-                      children: <Widget>[
-                        Container(
-                          child: Icon(
-                            Icons.search,
-                            color: Color(0x4D000000),
-                            size: 3.0,
-                          ),
-                          margin: EdgeInsets.fromLTRB(5, 0, 3, 0),
-                        ),
-                        Expanded(
-                          child: new TextField(
-                            decoration: new InputDecoration(
-                              hintText: '搜索商品名称',
-                              hintStyle: new TextStyle(
-                                fontSize: 13.0,
-                                color: Color(0x4D000000),
-                              ),
-                              fillColor: Color(0xffffffff),
-                              filled: true,
-                              contentPadding:
-                                  const EdgeInsets.symmetric(vertical: 4),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(3),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                right: Container(
-                  child: Image(
-                    image: new AssetImage('images/user.png'),
-                    height: 18,
-                  ),
-                ),
-              ),
+              child: topBar(context),
             ),
             Expanded(
               flex: 0,
@@ -100,7 +105,10 @@ class Page extends State<Home> {
               flex: 1,
               child: SingleChildScrollView(
                 child: new PageRender(
-                  data: pageData,
+                  data: pageData['data'] != null &&
+                          pageData['data']['sections'] != null
+                      ? pageData['data']['sections']
+                      : [],
                 ),
               ),
             ),

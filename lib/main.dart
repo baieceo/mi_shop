@@ -28,7 +28,7 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
   var _pageListr = [
     new Home(),
     new Category(),
