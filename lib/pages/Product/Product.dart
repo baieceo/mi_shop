@@ -140,7 +140,7 @@ class Page extends State<Product> {
                       color: Colors.white,
                       border: Border.all(
                         color: Color(0xffcccccc),
-                        width: 1,
+                        width: .5,
                       )),
                   child: new ClipRRect(
                     borderRadius: BorderRadius.circular(10),
@@ -254,7 +254,7 @@ class Page extends State<Product> {
             margin: EdgeInsets.fromLTRB(18, 10, 18, 0),
             decoration: BoxDecoration(
               color: Color(0xfffafafa),
-              border: Border.all(color: Color(0xffe5e5e5), width: 1),
+              border: Border.all(color: Color(0xffe5e5e5), width: .5),
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
             ),
             child: new Column(
@@ -264,7 +264,7 @@ class Page extends State<Product> {
                     border: Border(
                       bottom: BorderSide(
                         color: Color(0xffe5e5e5),
-                        width: 1,
+                        width: .5,
                       ),
                     ),
                   ),
