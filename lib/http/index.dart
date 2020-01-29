@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 
 class Http {
@@ -22,6 +25,39 @@ class Http {
       Response response = await dio.get(path, queryParameters: addParam(data));
 
       return response.data;
+    } on DioError catch (e) {
+      formatError(e);
+    }
+  }
+
+  static jsonp({
+    @required String path,
+    Map<String, String> data = const {},
+    Map<String, String> options = const {},
+  }) async {
+    try {
+      WordPair wordPair = new WordPair.random();
+      String callbackParamName = 'callback';
+      String callbackParamQuery = wordPair.toString();
+
+      if (options['callbackParamName'] != null) {
+        callbackParamName = options['callbackParamName'];
+      }
+
+      if (options['callbackParamQuery'] != null) {
+        callbackParamQuery = options['callbackParamQuery'];
+      }
+
+      data[callbackParamName] = callbackParamQuery;
+
+      Response response =
+          await dio.get<String>(path, queryParameters: addParam(data));
+
+      String result = response.data
+          .replaceAll(callbackParamQuery + '(', '')
+          .replaceAll(');', '');
+
+      return json.decode(result);
     } on DioError catch (e) {
       formatError(e);
     }

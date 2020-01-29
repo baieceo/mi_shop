@@ -95,7 +95,7 @@ class MyComponent extends State<ListTwoType14> {
                             ),
                             // 简介
                             new Text(
-                              item['product_brief'],
+                              item['product_brief'] ?? '',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(

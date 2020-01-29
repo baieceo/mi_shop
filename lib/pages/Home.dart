@@ -90,53 +90,50 @@ class Page extends State<Home> {
   }
 
   Widget layout(BuildContext context) {
-    return new MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: new Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Column(
-          children: <Widget>[
-            Expanded(
-              flex: 0,
-              child: topBar(context),
-            ),
-            Expanded(
-              flex: 0,
-              child: new Nav(
-                tabs: pageData,
-                pageId: pageId,
-                onTap: (String type, int id) {
-                  setState(() {
-                    pageId = id;
-                    pageType = type;
-                  });
+    return new Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            flex: 0,
+            child: topBar(context),
+          ),
+          Expanded(
+            flex: 0,
+            child: new Nav(
+              tabs: pageData,
+              pageId: pageId,
+              onTap: (String type, int id) {
+                setState(() {
+                  pageId = id;
+                  pageType = type;
+                });
 
-                  requestAPI();
-                },
-              ),
+                requestAPI();
+              },
             ),
-            Expanded(
-              flex: 1,
-              child: SingleChildScrollView(
-                child: loading == true
-                    ? new Container(
-                        height: 500,
-                        child: new Center(
-                          child: new Image(
-                            image: AssetImage('images/placeholder.png'),
-                          ),
-                        ),
-                      )
-                    : new Container(
-                        padding: EdgeInsets.only(bottom: 50),
-                        child: new PageRender(
-                          data: pageData['data']['sections'],
+          ),
+          Expanded(
+            flex: 1,
+            child: SingleChildScrollView(
+              child: loading == true
+                  ? new Container(
+                      height: 500,
+                      child: new Center(
+                        child: new Image(
+                          image: AssetImage('images/placeholder.png'),
                         ),
                       ),
-              ),
+                    )
+                  : new Container(
+                      padding: EdgeInsets.only(bottom: 50),
+                      child: new PageRender(
+                        data: pageData['data']['sections'],
+                      ),
+                    ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

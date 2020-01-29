@@ -41,35 +41,32 @@ class Page extends State<Category> {
 
   // 布局
   Widget layout(BuildContext context) {
-    return new MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: new Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Column(
-          children: <Widget>[
-            Expanded(
-              flex: 0,
-              child: navBar(context),
+    return new Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            flex: 0,
+            child: navBar(context),
+          ),
+          Expanded(
+            flex: 1,
+            child: Row(
+              children: <Widget>[
+                // 左侧栏
+                Expanded(
+                  flex: 1,
+                  child: sideBar(context),
+                ),
+                // 主体
+                Expanded(
+                  flex: 3,
+                  child: mainBody(context),
+                ),
+              ],
             ),
-            Expanded(
-              flex: 1,
-              child: Row(
-                children: <Widget>[
-                  // 左侧栏
-                  Expanded(
-                    flex: 1,
-                    child: sideBar(context),
-                  ),
-                  // 主体
-                  Expanded(
-                    flex: 3,
-                    child: mainBody(context),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

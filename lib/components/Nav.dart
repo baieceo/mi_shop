@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mi_shop/utils/index.dart';
 
 class Nav extends StatefulWidget {
   final Map tabs;
@@ -19,6 +20,9 @@ class MyComponent extends State<Nav> {
       _pageType = type;
       _pageId = id;
     });
+
+    print(type);
+    print(id);
 
     widget.onTap(_pageType, _pageId);
   }
@@ -66,26 +70,18 @@ class MyComponent extends State<Nav> {
                     bottom: new BorderSide(
                         width: 2.0,
                         color: item['page_id'] == widget.pageId
-                            ? Color(int.parse(
-                                    item['word_selected_color'].substring(1, 7),
-                                    radix: 16) +
-                                0xFF000000)
+                            ? Color(handleColor(item['word_selected_color']))
                             : Color(0x00000000))),
               ),
               child: Text(
                 item['name'],
                 style: item['page_id'] == widget.pageId
                     ? TextStyle(
-                        color: Color(int.parse(
-                                item['word_selected_color'].substring(1, 7),
-                                radix: 16) +
-                            0xFF000000),
+                        color: Color(handleColor(item['word_selected_color'])),
                       )
                     : TextStyle(
-                        color: Color(int.parse(
-                                item['word_unselected_color'].substring(1, 7),
-                                radix: 16) +
-                            0xFF000000),
+                        color:
+                            Color(handleColor(item['word_unselected_color'])),
                       ),
               ),
             ),

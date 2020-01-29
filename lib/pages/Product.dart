@@ -7,6 +7,9 @@ import 'package:mi_shop/http/api.dart';
 import 'package:mi_shop/utils/index.dart';
 
 class Product extends StatefulWidget {
+  final Map arguments;
+  Product({Key key, this.arguments}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return new Page();
@@ -30,12 +33,12 @@ class Page extends State<Product> {
   }
 
   Widget topBar(BuildContext context) {
-    return Container(
-      child: Row(
+    return new Container(
+      child: new Row(
         children: <Widget>[
-          Expanded(
+          new Expanded(
             flex: 0,
-            child: Container(
+            child: new Container(
               margin: EdgeInsets.all(10),
               width: 38,
               height: 38,
@@ -43,12 +46,12 @@ class Page extends State<Product> {
                 color: Color.fromRGBO(0, 0, 0, .1),
                 borderRadius: BorderRadius.all(Radius.circular(50)),
               ),
-              child: IconButton(
+              child: new IconButton(
                 iconSize: 20,
                 icon: Icon(Icons.arrow_back_ios),
                 color: Color.fromRGBO(255, 255, 255, 1),
                 onPressed: () {
-                  print('点击返回');
+                  Navigator.pop(context);
                 },
               ),
             ),
@@ -387,7 +390,7 @@ class Page extends State<Product> {
                   ),
                 ),
                 onTap: () {
-                  print('点击首页');
+                  Navigator.pushNamed(context, '/');
                 },
               ),
             ),
@@ -445,41 +448,36 @@ class Page extends State<Product> {
   }
 
   Widget layout(BuildContext context) {
-    print(MediaQuery.of(context).padding.top);
-    return new MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: new Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Stack(
-          children: <Widget>[
-            Container(
+    return new Scaffold(
+      backgroundColor: Colors.transparent,
+      body: new Stack(
+        children: <Widget>[
+          new Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+            ),
+            // padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+            child: mainBody(context),
+          ),
+          new Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: new Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Color.fromRGBO(0, 0, 0, 0),
               ),
-              // padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-              child: mainBody(context),
+              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+              child: topBar(context),
             ),
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(0, 0, 0, 0),
-                ),
-                padding:
-                    EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-                child: topBar(context),
-              ),
-            ),
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: actionBar(context),
-            ),
-          ],
-        ),
+          ),
+          new Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: actionBar(context),
+          ),
+        ],
       ),
     );
   }
@@ -489,8 +487,8 @@ class Page extends State<Product> {
       'client_id': '180100031051',
       'channel_id': '',
       'webp': '1',
-      'commodity_id': '10000180',
-      'pid': '10000180',
+      'commodity_id': widget.arguments['product_id'],
+      'pid': widget.arguments['product_id'],
     });
 
     setState(() {

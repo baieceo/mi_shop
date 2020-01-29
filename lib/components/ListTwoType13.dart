@@ -5,6 +5,7 @@ import 'package:mi_shop/utils/index.dart';
 class ListTwoType13 extends StatefulWidget {
   final Map data;
   ListTwoType13({Key key, this.data}) : super(key: key);
+
   @override
   createState() => new MyComponent();
 }
@@ -12,14 +13,11 @@ class ListTwoType13 extends StatefulWidget {
 class MyComponent extends State<ListTwoType13> {
   @override
   Widget build(BuildContext context) {
-    var bgColor =
-        int.parse(widget.data['bg_color'].substring(1, 7), radix: 16) +
-            0xFF000000;
     return new Container(
       padding: EdgeInsets.only(left: 8.0),
       margin: EdgeInsets.all(0),
       decoration: BoxDecoration(
-        color: Color(bgColor),
+        color: Color(handleColor(widget.data['bg_color'])),
       ),
       child: new Row(
         children: handlerData(),
@@ -36,8 +34,13 @@ class MyComponent extends State<ListTwoType13> {
         items.add(
           new GestureDetector(
             onTap: () {
-              print(item['product_id']);
-              Navigator.of(context).pushNamed('/product');
+              Navigator.pushNamed(
+                context,
+                '/product',
+                arguments: {
+                  'product_id': item['product_id'],
+                },
+              );
             },
             child: new Container(
               margin: EdgeInsets.only(right: 8.0),
