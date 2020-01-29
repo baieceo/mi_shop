@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mi_shop/components/Gallery.dart';
 import 'package:mi_shop/http/index.dart';
 import 'package:mi_shop/http/api.dart';
@@ -140,7 +139,7 @@ class Page extends State<Product> {
                       color: Colors.white,
                       border: Border.all(
                         color: Color(0xffcccccc),
-                        width: 1,
+                        width: .5,
                       )),
                   child: new ClipRRect(
                     borderRadius: BorderRadius.circular(10),
@@ -207,6 +206,14 @@ class Page extends State<Product> {
       return new ListView(
         padding: EdgeInsets.all(0),
         children: <Widget>[
+          // 顶部黑条
+          new Container(
+            decoration: BoxDecoration(
+              color: Colors.black,
+            ),
+            height: MediaQuery.of(context).padding.top,
+          ),
+          // 轮播
           new Gallery(
             items: goodsInfo == null ? [] : goodsInfo['gallery_v3'],
             height: 450,
@@ -254,7 +261,10 @@ class Page extends State<Product> {
             margin: EdgeInsets.fromLTRB(18, 10, 18, 0),
             decoration: BoxDecoration(
               color: Color(0xfffafafa),
-              border: Border.all(color: Color(0xffe5e5e5), width: 1),
+              border: Border.all(
+                color: Color(0xffe5e5e5),
+                width: .5,
+              ),
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
             ),
             child: new Column(
@@ -264,7 +274,7 @@ class Page extends State<Product> {
                     border: Border(
                       bottom: BorderSide(
                         color: Color(0xffe5e5e5),
-                        width: 1,
+                        width: .5,
                       ),
                     ),
                   ),
@@ -320,39 +330,36 @@ class Page extends State<Product> {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
       home: new Scaffold(
-        body: ConstrainedBox(
-          constraints: BoxConstraints.expand(),
-          child: Stack(
-            children: <Widget>[
-              Container(
+        backgroundColor: Colors.transparent,
+        body: Stack(
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              // padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+              child: mainBody(context),
+            ),
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Color.fromRGBO(0, 0, 0, 0),
                 ),
                 padding:
                     EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-                child: mainBody(context),
+                child: topBar(context),
               ),
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Color.fromRGBO(0, 0, 0, 0),
-                  ),
-                  padding:
-                      EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-                  child: topBar(context),
-                ),
-              ),
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: 0,
-                child: Text('尾'),
-              ),
-            ],
-          ),
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: Text('尾'),
+            ),
+          ],
         ),
       ),
     );
