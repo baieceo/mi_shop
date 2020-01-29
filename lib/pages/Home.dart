@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:mi_shop/components/HeaderNav.dart';
 import 'package:mi_shop/http/index.dart';
 import 'package:mi_shop/http/api.dart';
@@ -16,6 +17,7 @@ class Page extends State<Home> {
   Map pageData = Map();
   int pageId = 0;
   String pageType = 'home';
+  bool loading = true;
 
   @override
   void initState() {
@@ -91,6 +93,7 @@ class Page extends State<Home> {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
       home: new Scaffold(
+        backgroundColor: Colors.transparent,
         body: Column(
           children: <Widget>[
             Expanded(
@@ -115,12 +118,21 @@ class Page extends State<Home> {
             Expanded(
               flex: 1,
               child: SingleChildScrollView(
-                child: new PageRender(
-                  data: pageData['data'] != null &&
-                          pageData['data']['sections'] != null
-                      ? pageData['data']['sections']
-                      : [],
-                ),
+                child: loading == true
+                    ? new Container(
+                        height: 500,
+                        child: new Center(
+                          child: new Image(
+                            image: AssetImage('images/placeholder.png'),
+                          ),
+                        ),
+                      )
+                    : new Container(
+                        padding: EdgeInsets.only(bottom: 50),
+                        child: new PageRender(
+                          data: pageData['data']['sections'],
+                        ),
+                      ),
               ),
             ),
           ],
@@ -130,6 +142,10 @@ class Page extends State<Home> {
   }
 
   void requestAPI() async {
+    setState(() {
+      loading = true;
+    });
+
     var res = await Http.post(
       path: HOME_PAGE,
       data: {'page_type': pageType, 'page_id': pageId.toString()},
@@ -137,6 +153,7 @@ class Page extends State<Home> {
 
     setState(() {
       pageData = res;
+      loading = false;
     });
   }
 }

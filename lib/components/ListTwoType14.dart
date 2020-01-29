@@ -26,7 +26,7 @@ class MyComponent extends State<ListTwoType14> {
           crossAxisCount: 2,
           crossAxisSpacing: 8,
           mainAxisSpacing: 30,
-          childAspectRatio: 195 / 330,
+          childAspectRatio: 195 / 340,
         ),
         padding: EdgeInsets.symmetric(horizontal: 0),
         children: handlerData(),

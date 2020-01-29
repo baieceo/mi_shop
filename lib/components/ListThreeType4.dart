@@ -25,7 +25,7 @@ class MyComponent extends State<ListThreeType4> {
           crossAxisCount: 3,
           crossAxisSpacing: 8,
           mainAxisSpacing: 30,
-          childAspectRatio: 128 / 210,
+          childAspectRatio: 128 / 225,
         ),
         padding: EdgeInsets.symmetric(horizontal: 0),
         children: handlerData(),

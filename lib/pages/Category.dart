@@ -44,6 +44,7 @@ class Page extends State<Category> {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
       home: new Scaffold(
+        backgroundColor: Colors.transparent,
         body: Column(
           children: <Widget>[
             Expanded(
