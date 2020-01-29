@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mi_shop/utils/index.dart';
 
 class ListTwoType13 extends StatefulWidget {
   final Map data;
@@ -14,13 +15,13 @@ class MyComponent extends State<ListTwoType13> {
     var bgColor =
         int.parse(widget.data['bg_color'].substring(1, 7), radix: 16) +
             0xFF000000;
-    return Container(
+    return new Container(
       padding: EdgeInsets.only(left: 8.0),
       margin: EdgeInsets.all(0),
       decoration: BoxDecoration(
         color: Color(bgColor),
       ),
-      child: Row(
+      child: new Row(
         children: handlerData(),
       ),
     );
@@ -32,81 +33,48 @@ class MyComponent extends State<ListTwoType13> {
 
     if (widget.data['items'] != null) {
       widget.data['items'].forEach((item) {
-        List<Widget> imgs = [];
-        String imgUrl = item['img_url'];
-
-        RegExp isUri = new RegExp(r'^\/\/');
-
-        if (isUri.hasMatch(imgUrl)) {
-          imgUrl = 'https:' + imgUrl;
-        }
-
-        imgs.add(Image(
-          image: NetworkImage(imgUrl),
-          fit: BoxFit.cover,
-          width: itemWidth,
-          height: ScreenUtil().setWidth(270),
-        ));
-
-        if (item['product_tag_array'] != null &&
-            item['product_tag_array'].length > 0) {
-          String tagUrl = item['product_tag_array'][0];
-
-          if (isUri.hasMatch(tagUrl)) {
-            tagUrl = 'https:' + tagUrl;
-          }
-
-          imgs.add(Positioned(
-            right: 5,
-            bottom: 5,
-            child: Image(
-              image: NetworkImage(tagUrl),
-              fit: BoxFit.contain,
-              width: 50,
-              height: 50,
-            ),
-          ));
-        }
-
-        List<InlineSpan> prices = List();
-
-        prices.add(TextSpan(
-            text: '￥' + item['product_price'],
-            style: TextStyle(
-              fontSize: ScreenUtil().setSp(26),
-              color: Color(int.parse(widget.data['btn_color'].substring(1, 7),
-                      radix: 16) +
-                  0xFF000000),
-            )));
-
-        if (item['product_price'] != item['product_org_price']) {
-          prices.add(TextSpan(
-            text: '￥' + item['product_org_price'],
-            style: TextStyle(
-              color: Color.fromRGBO(0, 0, 0, .54),
-              fontSize: ScreenUtil().setSp(20),
-              decoration: TextDecoration.lineThrough,
-            ),
-          ));
-        }
-
         items.add(
-          GestureDetector(
-            child: Container(
+          new GestureDetector(
+            onTap: () {
+              print(item['product_id']);
+              Navigator.of(context).pushNamed('/product');
+            },
+            child: new Container(
               margin: EdgeInsets.only(right: 8.0),
-              child: Column(
+              child: new Column(
                 children: <Widget>[
-                  Stack(
-                    children: imgs,
+                  new Stack(
+                    children: <Widget>[
+                      new Image(
+                        image: NetworkImage(handleUrl(item['img_url'])),
+                        fit: BoxFit.cover,
+                        width: itemWidth,
+                        height: ScreenUtil().setWidth(270),
+                      ),
+                      item['product_tag_array'] != null &&
+                              item['product_tag_array'].length > 0
+                          ? new Positioned(
+                              right: 5,
+                              bottom: 5,
+                              child: new Image(
+                                image: NetworkImage(
+                                    handleUrl(item['product_tag_array'][0])),
+                                fit: BoxFit.contain,
+                                width: 50,
+                                height: 50,
+                              ),
+                            )
+                          : new Container()
+                    ],
                   ),
-                  Container(
+                  new Container(
                     width: itemWidth,
-                    child: Padding(
+                    child: new Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 10.0, horizontal: 15.0),
-                      child: Column(
+                      child: new Column(
                         children: <Widget>[
-                          Text(
+                          new Text(
                             item['product_name'],
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -116,7 +84,7 @@ class MyComponent extends State<ListTwoType13> {
                               color: Color.fromRGBO(0, 0, 0, .87),
                             ),
                           ),
-                          Text(
+                          new Text(
                             item['product_brief'],
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -126,23 +94,43 @@ class MyComponent extends State<ListTwoType13> {
                               color: Color.fromRGBO(0, 0, 0, .54),
                             ),
                           ),
-                          Text.rich(
-                            TextSpan(
-                              children: prices,
-                            ),
+                          new Text.rich(
+                            new TextSpan(children: [
+                              new TextSpan(
+                                text: '￥' + item['product_price'],
+                                style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(26),
+                                  color: Color(
+                                      handleColor(widget.data['btn_color'])),
+                                ),
+                              ),
+                              new TextSpan(
+                                text:
+                                    item['show_price_qi'] == true ? '起 ' : ' ',
+                                style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(20),
+                                  color: Color(
+                                      handleColor(widget.data['btn_color'])),
+                                ),
+                              ),
+                              item['product_price'] != item['product_org_price']
+                                  ? new TextSpan(
+                                      text: '￥' + item['product_org_price'],
+                                      style: TextStyle(
+                                        color: Color.fromRGBO(0, 0, 0, .54),
+                                        fontSize: ScreenUtil().setSp(20),
+                                        decoration: TextDecoration.lineThrough,
+                                      ),
+                                    )
+                                  : new TextSpan(),
+                            ]),
                           ),
-                          FlatButton(
-                            child: Text('立即购买'),
+                          new FlatButton(
+                            child: new Text('立即购买'),
                             padding: EdgeInsets.symmetric(horizontal: 30.0),
-                            color: Color(int.parse(
-                                    widget.data['btn_color'].substring(1, 7),
-                                    radix: 16) +
-                                0xFF000000),
-                            textColor: Color(int.parse(
-                                    widget.data['btn_txt_color']
-                                        .substring(1, 7),
-                                    radix: 16) +
-                                0xFF000000),
+                            color: Color(handleColor(widget.data['btn_color'])),
+                            textColor: Color(
+                                handleColor(widget.data['btn_txt_color'])),
                             onPressed: () {},
                           )
                         ],
