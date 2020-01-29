@@ -2,18 +2,25 @@ import 'package:flutter/material.dart';
 
 class Nav extends StatefulWidget {
   final Map tabs;
-  Nav({Key key, this.tabs}) : super(key: key);
+  final int pageId;
+  final Function onTap;
+
+  Nav({Key key, this.tabs, this.pageId, this.onTap}) : super(key: key);
   @override
   createState() => new MyComponent();
 }
 
 class MyComponent extends State<Nav> {
   int _pageId = 0;
+  String _pageType;
 
-  void _onItemTapped(int id) {
+  void _onItemTapped(String type, int id) {
     setState(() {
+      _pageType = type;
       _pageId = id;
     });
+
+    widget.onTap(_pageType, _pageId);
   }
 
   @override
@@ -58,7 +65,7 @@ class MyComponent extends State<Nav> {
                 border: new Border(
                     bottom: new BorderSide(
                         width: 2.0,
-                        color: item['page_id'] == _pageId
+                        color: item['page_id'] == widget.pageId
                             ? Color(int.parse(
                                     item['word_selected_color'].substring(1, 7),
                                     radix: 16) +
@@ -67,7 +74,7 @@ class MyComponent extends State<Nav> {
               ),
               child: Text(
                 item['name'],
-                style: item['page_id'] == _pageId
+                style: item['page_id'] == widget.pageId
                     ? TextStyle(
                         color: Color(int.parse(
                                 item['word_selected_color'].substring(1, 7),
@@ -82,7 +89,7 @@ class MyComponent extends State<Nav> {
                       ),
               ),
             ),
-            onTap: () => _onItemTapped(item['page_id']),
+            onTap: () => _onItemTapped(item['page_type'], item['page_id']),
           ),
         ));
       }

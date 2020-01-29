@@ -3,7 +3,6 @@ import 'package:mi_shop/pages/Home.dart';
 import 'package:mi_shop/pages/Category.dart';
 import 'package:mi_shop/pages/Cart.dart';
 import 'package:mi_shop/pages/Mine.dart';
-import 'package:mi_shop/pages/Product/Product.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() => runApp(MyApp());
@@ -16,8 +15,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: _title,
       debugShowCheckedModeBanner: false,
-      // home: MyStatefulWidget(),
-      home: Product(),
+      home: MyStatefulWidget(),
+      // home: Product(),
     );
   }
 }
@@ -30,7 +29,7 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
   var _pageListr = [
     new Home(),
     new Category(),

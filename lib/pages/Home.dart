@@ -14,6 +14,8 @@ class Home extends StatefulWidget {
 
 class Page extends State<Home> {
   Map pageData = Map();
+  int pageId = 0;
+  String pageType = 'home';
 
   @override
   void initState() {
@@ -99,6 +101,15 @@ class Page extends State<Home> {
               flex: 0,
               child: new Nav(
                 tabs: pageData,
+                pageId: pageId,
+                onTap: (String type, int id) {
+                  setState(() {
+                    pageId = id;
+                    pageType = type;
+                  });
+
+                  requestAPI();
+                },
               ),
             ),
             Expanded(
@@ -121,9 +132,7 @@ class Page extends State<Home> {
   void requestAPI() async {
     var res = await Http.post(
       path: HOME_PAGE,
-      data: {
-        'page_type': 'home',
-      },
+      data: {'page_type': pageType, 'page_id': pageId.toString()},
     );
 
     setState(() {

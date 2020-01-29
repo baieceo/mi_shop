@@ -5,7 +5,10 @@ import 'package:mi_shop/components/DividerLine.dart';
 import 'package:mi_shop/components/ListTwoType1.dart';
 import 'package:mi_shop/components/ListTwoType2.dart';
 import 'package:mi_shop/components/ListTwoType3.dart';
+import 'package:mi_shop/components/ListThreeType4.dart';
 import 'package:mi_shop/components/ListTwoType13.dart';
+import 'package:mi_shop/components/ListTwoType14.dart';
+import 'package:mi_shop/components/ListOneType14.dart';
 import 'package:mi_shop/components/ListActionTitle.dart';
 import 'package:mi_shop/components/CategoryTitle.dart';
 import 'package:mi_shop/components/CategoryGroup.dart';
@@ -56,9 +59,24 @@ class MyComponent extends State<PageRender> {
           components.add(new ListTwoType3(data: section['body']));
         }
 
+        // 三栏列表4
+        if (section['view_type'] == 'list_three_type4') {
+          components.add(new ListThreeType4(data: section['body']));
+        }
+
         // 两栏列表13
         if (section['view_type'] == 'list_two_type13') {
           components.add(new ListTwoType13(data: section['body']));
+        }
+
+        // 两栏列表14
+        if (section['view_type'] == 'list_two_type14') {
+          components.add(new ListTwoType14(data: section['body']));
+        }
+
+        // 一栏列表14
+        if (section['view_type'] == 'list_one_type14') {
+          components.add(new ListOneType14(data: section['body']));
         }
 
         // 列表标题
