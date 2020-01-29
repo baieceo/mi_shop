@@ -88,6 +88,15 @@ class MyComponent extends State<ListTwoType1> {
 
         items.add(
           GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                '/product',
+                arguments: {
+                  'product_id': item['product_id'],
+                },
+              );
+            },
             child: Container(
               margin: EdgeInsets.only(right: 8.0),
               child: Column(

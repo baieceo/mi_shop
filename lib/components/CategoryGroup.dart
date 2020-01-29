@@ -38,6 +38,15 @@ class MyComponent extends State<CategoryGroup> {
 
         items.add(
           GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                '/product',
+                arguments: {
+                  'product_id': item['product_id'],
+                },
+              );
+            },
             child: Container(
               padding: EdgeInsets.all(0),
               child: Column(

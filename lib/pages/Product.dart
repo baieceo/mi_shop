@@ -90,100 +90,105 @@ class Page extends State<Product> {
       List<Widget> classParams = [];
       List classParamsList = [];
 
-      classParamsList = goodsInfo['class_parameters']['list']
-          .where((item) => item['icon'] != null)
-          .toList();
+      if (goodsInfo['class_parameters']['list'] != null) {
+        classParamsList = goodsInfo['class_parameters']['list']
+            .where((item) => item['icon'] != null)
+            .toList();
 
-      classParamsList.forEach((param) {
-        classParams.add(new Container(
-          padding: EdgeInsets.symmetric(horizontal: 5),
-          width: 100,
-          child: new Column(
-            children: <Widget>[
-              Image(
-                image: NetworkImage(param['icon']),
-                width: 24,
-                height: 24,
-                fit: BoxFit.contain,
-              ),
-              Container(
-                height: 20,
-                child: Text(
-                  param['top_title'],
+        classParamsList.forEach((param) {
+          classParams.add(new Container(
+            padding: EdgeInsets.symmetric(horizontal: 5),
+            width: 100,
+            child: new Column(
+              children: <Widget>[
+                Image(
+                  image: NetworkImage(param['icon']),
+                  width: 24,
+                  height: 24,
+                  fit: BoxFit.contain,
+                ),
+                Container(
+                  height: 20,
+                  child: Text(
+                    param['top_title'],
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Text(
+                  param['bottom_title'],
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-              ),
-              Text(
-                param['bottom_title'],
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ),
-        ));
-      });
+              ],
+            ),
+          ));
+        });
+      }
 
       // 为你推荐
       List<Widget> relatedRecommend = [];
 
-      pageData['related_recommend']['data'].forEach((item) {
-        relatedRecommend.add(new Container(
-          child: new GestureDetector(
-            onTap: () {
-              print('点击推荐');
-            },
-            child: new Column(
-              children: <Widget>[
-                new Container(
-                  margin: EdgeInsets.symmetric(horizontal: 5),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      color: Colors.white,
-                      border: Border.all(
-                        color: Color(0xffcccccc),
-                        width: .5,
-                      )),
-                  child: new ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: new Image(
-                      width: 95,
-                      height: 95,
-                      image: NetworkImage(item['image_url']),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                new Container(
-                  width: 95,
-                  height: 30,
-                  padding: EdgeInsets.only(top: 10),
-                  child: new Center(
-                    child: new Text(
-                      item['name'],
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: Color(0xff3c3c3c),
-                        fontSize: 14,
+      if (pageData['related_recommend'] != null &&
+          pageData['related_recommend']['data'] != null) {
+        pageData['related_recommend']['data'].forEach((item) {
+          relatedRecommend.add(new Container(
+            child: new GestureDetector(
+              onTap: () {
+                print('点击推荐');
+              },
+              child: new Column(
+                children: <Widget>[
+                  new Container(
+                    margin: EdgeInsets.symmetric(horizontal: 5),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        color: Colors.white,
+                        border: Border.all(
+                          color: Color(0xffcccccc),
+                          width: .5,
+                        )),
+                    child: new ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: new Image(
+                        width: 95,
+                        height: 95,
+                        image: NetworkImage(item['image_url']),
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
-                ),
-                new Text(
-                  '￥' +
-                      item['price'] +
-                      (item['is_multi_price'] == true ? '起' : ''),
-                  style: TextStyle(
-                    color: Color(0xffff6700),
-                    fontSize: 12,
+                  new Container(
+                    width: 95,
+                    height: 30,
+                    padding: EdgeInsets.only(top: 10),
+                    child: new Center(
+                      child: new Text(
+                        item['name'],
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: Color(0xff3c3c3c),
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                  new Text(
+                    '￥' +
+                        item['price'] +
+                        (item['is_multi_price'] == true ? '起' : ''),
+                    style: TextStyle(
+                      color: Color(0xffff6700),
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ));
-      });
+          ));
+        });
+      }
 
       // 产品详情
       List<Widget> goodsTpl = [];
@@ -205,6 +210,17 @@ class Page extends State<Product> {
           ));
         } */
       });
+
+      String productDesc = '';
+
+      if (goodsInfo['product_desc'] != null &&
+          goodsInfo['product_desc'] != '') {
+        productDesc = goodsInfo['product_desc'];
+      } else if (pageData['product_info'] != null &&
+          pageData['product_info']['product_desc'] != null &&
+          pageData['product_info']['product_desc'] != '') {
+        productDesc = pageData['product_info']['product_desc'];
+      }
 
       return new ListView(
         padding: EdgeInsets.all(0),
@@ -238,7 +254,7 @@ class Page extends State<Product> {
           new Container(
             padding: EdgeInsets.fromLTRB(18, 0, 18, 0),
             child: new Html(
-              data: goodsInfo['product_desc'],
+              data: productDesc,
               defaultTextStyle: TextStyle(
                 color: Color.fromRGBO(0, 0, 0, .54),
                 fontSize: 14,
@@ -251,67 +267,71 @@ class Page extends State<Product> {
             child: Text.rich(TextSpan(children: productPrices)),
           ),
           // 关键参数
-          new SizedBox(
-            height: 66,
-            child: new ListView(
-              scrollDirection: Axis.horizontal,
-              children: classParams,
-            ),
-          ),
+          classParams.length == 0
+              ? new Container()
+              : new SizedBox(
+                  height: 66,
+                  child: new ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: classParams,
+                  ),
+                ),
           // 为你推荐
-          new Container(
-            height: 235,
-            margin: EdgeInsets.fromLTRB(18, 10, 18, 0),
-            decoration: BoxDecoration(
-              color: Color(0xfffafafa),
-              border: Border.all(
-                color: Color(0xffe5e5e5),
-                width: .5,
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            ),
-            child: new Column(
-              children: <Widget>[
-                new Container(
+          relatedRecommend.length == 0
+              ? new Container()
+              : new Container(
+                  height: 235,
+                  margin: EdgeInsets.fromLTRB(18, 10, 18, 0),
                   decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Color(0xffe5e5e5),
-                        width: .5,
-                      ),
+                    color: Color(0xfffafafa),
+                    border: Border.all(
+                      color: Color(0xffe5e5e5),
+                      width: .5,
                     ),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   ),
-                  height: 46,
-                  child: new Center(
-                    child: new Text(
-                      pageData['related_recommend']['title'],
-                      style: TextStyle(
-                        color: Color(0xffff6700),
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
-                ),
-                new Container(
-                  padding: EdgeInsets.symmetric(vertical: 18),
-                  child: new SizedBox(
-                    height: 150,
-                    child: new ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        new Container(
-                          margin: EdgeInsets.symmetric(horizontal: 15),
-                          child: new Row(
-                            children: relatedRecommend,
+                  child: new Column(
+                    children: <Widget>[
+                      new Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Color(0xffe5e5e5),
+                              width: .5,
+                            ),
                           ),
-                        )
-                      ],
-                    ),
+                        ),
+                        height: 46,
+                        child: new Center(
+                          child: new Text(
+                            pageData['related_recommend']['title'],
+                            style: TextStyle(
+                              color: Color(0xffff6700),
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+                      new Container(
+                        padding: EdgeInsets.symmetric(vertical: 18),
+                        child: new SizedBox(
+                          height: 150,
+                          child: new ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              new Container(
+                                margin: EdgeInsets.symmetric(horizontal: 15),
+                                child: new Row(
+                                  children: relatedRecommend,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
           // 产品详情
           new Container(
             margin: EdgeInsets.symmetric(vertical: 20),

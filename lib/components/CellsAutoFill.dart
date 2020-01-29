@@ -47,9 +47,10 @@ class MyComponent extends State<CellsAutoFill> {
           child: GestureDetector(
             onTap: () {
               String actionType = item['action']['type'];
+              String path = item['action']['path'];
 
+              // 活动
               if (actionType == 'activity') {
-                String path = item['action']['path'];
                 RegExp reg = new RegExp(r'id=(\d+)');
                 Iterable<Match> matchesPath = reg.allMatches(path);
                 String id;
@@ -72,7 +73,17 @@ class MyComponent extends State<CellsAutoFill> {
                   },
                 );
               }
-              print(item);
+
+              // 产品
+              if (actionType == 'product') {
+                Navigator.pushNamed(
+                  context,
+                  '/product',
+                  arguments: {
+                    'product_id': path.toString(),
+                  },
+                );
+              }
             },
             child: Image(
               image: NetworkImage(item['img_url']),

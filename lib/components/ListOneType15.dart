@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mi_shop/utils/index.dart';
 
-class ListOneType14 extends StatefulWidget {
+class ListOneType15 extends StatefulWidget {
   final Map data;
-  ListOneType14({Key key, this.data}) : super(key: key);
+  ListOneType15({Key key, this.data}) : super(key: key);
   @override
   createState() => new MyComponent();
 }
 
-class MyComponent extends State<ListOneType14> {
+class MyComponent extends State<ListOneType15> {
   @override
   Widget build(BuildContext context) {
     return Column(

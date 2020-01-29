@@ -41,7 +41,13 @@ class MyComponent extends State<ListThreeType4> {
         items.add(
           new GestureDetector(
             onTap: () {
-              print('点击购买');
+              Navigator.pushNamed(
+                context,
+                '/product',
+                arguments: {
+                  'product_id': item['product_id'],
+                },
+              );
             },
             child: new ClipRRect(
               borderRadius: BorderRadius.circular(5),

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:mi_shop/components/HeaderNav.dart';
 import 'package:mi_shop/http/index.dart';
 import 'package:mi_shop/http/api.dart';
-import 'package:mi_shop/components/Nav.dart';
 import 'package:mi_shop/components/PageRender.dart';
 
 class Activity extends StatefulWidget {
@@ -124,7 +122,7 @@ class Page extends State<Activity> {
       path: ACTIVITY_PAGE,
       data: {
         'client_id': '180100031051',
-        'id': widget.arguments['id'] ?? '13230',
+        'id': widget.arguments['id'],
         'webp': '0',
         'time': '1580301629830',
       },

@@ -9,6 +9,7 @@ import 'package:mi_shop/components/ListThreeType4.dart';
 import 'package:mi_shop/components/ListTwoType13.dart';
 import 'package:mi_shop/components/ListTwoType14.dart';
 import 'package:mi_shop/components/ListOneType14.dart';
+import 'package:mi_shop/components/ListOneType15.dart';
 import 'package:mi_shop/components/ListActionTitle.dart';
 import 'package:mi_shop/components/CategoryTitle.dart';
 import 'package:mi_shop/components/CategoryGroup.dart';
@@ -77,6 +78,11 @@ class MyComponent extends State<PageRender> {
         // 一栏列表14
         if (section['view_type'] == 'list_one_type14') {
           components.add(new ListOneType14(data: section['body']));
+        }
+
+        // 一栏列表15
+        if (section['view_type'] == 'list_one_type15') {
+          components.add(new ListOneType15(data: section['body']));
         }
 
         // 列表标题

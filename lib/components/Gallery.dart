@@ -26,13 +26,53 @@ class MyComponent extends State<Gallery> {
         height: itemHeight,
         child: new Swiper(
           itemBuilder: (BuildContext context, int index) {
-            /* return new Image.network(
-              handleUrl(widget.items[index]['img_url']),
-              fit: BoxFit.cover,
-            ); */
-            return new FadeInImage.assetNetwork(
-              placeholder: 'images/placeholder.png',
-              image: handleUrl(widget.items[index]['img_url']),
+            return new GestureDetector(
+              onTap: () {
+                var item = widget.items[index];
+
+                String actionType = item['action']['type'];
+                String path = item['action']['path'];
+
+                // 活动
+                if (actionType == 'activity') {
+                  RegExp reg = new RegExp(r'id=(\d+)');
+                  Iterable<Match> matchesPath = reg.allMatches(path);
+                  String id;
+
+                  for (Match m in matchesPath) {
+                    for (int i = 0; i < m.groupCount + 1; i++) {
+                      String match = m.group(i);
+
+                      if (i == 1) {
+                        id = match;
+                      }
+                    }
+                  }
+
+                  Navigator.pushNamed(
+                    context,
+                    '/activity',
+                    arguments: {
+                      'id': id,
+                    },
+                  );
+                }
+
+                // 产品
+                if (actionType == 'product') {
+                  Navigator.pushNamed(
+                    context,
+                    '/product',
+                    arguments: {
+                      'product_id': path.toString(),
+                    },
+                  );
+                }
+              },
+              child: new FadeInImage.assetNetwork(
+                placeholder: 'images/placeholder.png',
+                image: handleUrl(widget.items[index]['img_url']),
+              ),
             );
           },
           itemHeight: itemHeight,
@@ -59,15 +99,6 @@ class MyComponent extends State<Gallery> {
         ),
         height: itemHeight,
         alignment: Alignment.center,
-        /* child: SizedBox(
-          height: 35,
-          width: 35,
-          child: CircularProgressIndicator(
-            backgroundColor: Colors.grey[200],
-            valueColor: AlwaysStoppedAnimation(Colors.grey[350]),
-            strokeWidth: 3.0,
-          ),
-        ), */
         child: Image(
           image: AssetImage('images/placeholder.png'),
         ),

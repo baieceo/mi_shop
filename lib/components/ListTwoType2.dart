@@ -51,7 +51,15 @@ class MyComponent extends State<ListTwoType2> {
               image: NetworkImage(item['img_url']),
               width: w,
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                '/product',
+                arguments: {
+                  'product_id': item['product_id'],
+                },
+              );
+            },
           ),
         );
 
@@ -95,7 +103,15 @@ class MyComponent extends State<ListTwoType2> {
                 ],
               ),
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                '/product',
+                arguments: {
+                  'product_id': item['product_id'],
+                },
+              );
+            },
           ),
         );
       });
