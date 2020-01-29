@@ -325,6 +325,125 @@ class Page extends State<Product> {
     }
   }
 
+  // 底部栏
+  Widget actionBar(BuildContext context) {
+    return new ConstrainedBox(
+      constraints: BoxConstraints(
+        minWidth: double.infinity,
+      ),
+      child: new Container(
+        margin: EdgeInsets.all(10),
+        height: 60,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          boxShadow: [
+            BoxShadow(
+              // 0 2px 4px -1px rgba(0,0,0,.2)
+              offset: Offset(0, 2),
+              blurRadius: 4,
+              spreadRadius: -1,
+              color: Color.fromRGBO(0, 0, 0, .2),
+            ),
+            BoxShadow(
+              // 0 4px 5px rgba(0,0,0,.14)
+              offset: Offset(0, 4),
+              blurRadius: 5,
+              spreadRadius: 0,
+              color: Color.fromRGBO(0, 0, 0, .14),
+            ),
+            BoxShadow(
+              // 0 1px 10px rgba(0,0,0,.12)
+              offset: Offset(0, 1),
+              blurRadius: 10,
+              spreadRadius: 0,
+              color: Color.fromRGBO(0, 0, 0, .12),
+            ),
+          ],
+        ),
+        child: new Row(
+          children: <Widget>[
+            Expanded(
+              flex: 0,
+              child: new GestureDetector(
+                child: new Container(
+                  width: 50,
+                  child: new Center(
+                    child: new Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.home,
+                          color: Color.fromRGBO(0, 0, 0, .54),
+                        ),
+                        Text(
+                          '首页',
+                          style: TextStyle(
+                            color: Color.fromRGBO(0, 0, 0, .54),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                onTap: () {
+                  print('点击首页');
+                },
+              ),
+            ),
+            Expanded(
+              flex: 0,
+              child: new GestureDetector(
+                child: new Container(
+                  width: 50,
+                  child: new Center(
+                    child: new Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.shopping_cart,
+                          color: Color.fromRGBO(0, 0, 0, .54),
+                        ),
+                        Text(
+                          '购物车',
+                          style: TextStyle(
+                            color: Color.fromRGBO(0, 0, 0, .54),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                onTap: () {
+                  print('点击首页');
+                },
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: new Container(
+                alignment: Alignment.centerRight,
+                padding: EdgeInsets.only(right: 15),
+                child: new FlatButton(
+                  color: Color(0xffff6700),
+                  highlightColor: Color(0xffff9700),
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                  child: Text(
+                    '立即购买',
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0)),
+                  onPressed: () {},
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget layout(BuildContext context) {
     print(MediaQuery.of(context).padding.top);
     return new MaterialApp(
@@ -357,7 +476,7 @@ class Page extends State<Product> {
               left: 0,
               right: 0,
               bottom: 0,
-              child: Text('尾'),
+              child: actionBar(context),
             ),
           ],
         ),
