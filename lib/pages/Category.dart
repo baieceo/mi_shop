@@ -88,7 +88,7 @@ class Page extends State<Category> {
               icon: Icon(Icons.arrow_back_ios),
               splashColor: Colors.transparent,
               onPressed: () {
-                print('返回');
+                Navigator.pop(context);
               },
             ),
           ),

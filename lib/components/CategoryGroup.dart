@@ -39,13 +39,55 @@ class MyComponent extends State<CategoryGroup> {
         items.add(
           GestureDetector(
             onTap: () {
-              Navigator.pushNamed(
-                context,
-                '/product',
-                arguments: {
-                  'product_id': item['product_id'],
-                },
-              );
+              String actionType = item['action']['type'];
+              String path = item['action']['path'];
+
+              // 活动
+              if (actionType == 'activity') {
+                RegExp reg = new RegExp(r'id=(\d+)');
+                Iterable<Match> matchesPath = reg.allMatches(path);
+                String id;
+
+                for (Match m in matchesPath) {
+                  for (int i = 0; i < m.groupCount + 1; i++) {
+                    String match = m.group(i);
+
+                    if (i == 1) {
+                      id = match;
+                    }
+                  }
+                }
+
+                Navigator.pushNamed(
+                  context,
+                  '/activity',
+                  arguments: {
+                    'id': id,
+                  },
+                );
+              }
+
+              // 产品
+              if (actionType == 'product') {
+                Navigator.pushNamed(
+                  context,
+                  '/product',
+                  arguments: {
+                    'product_id': path.toString(),
+                  },
+                );
+              }
+
+              // 分类
+              if (actionType == 'cate') {
+                Navigator.pushNamed(
+                  context,
+                  '/commoditylist',
+                  arguments: {
+                    'id': path.toString(),
+                  },
+                );
+              }
             },
             child: Container(
               padding: EdgeInsets.all(0),

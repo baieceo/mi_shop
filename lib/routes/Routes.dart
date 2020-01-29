@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mi_shop/pages/Activity.dart';
-
+import 'package:mi_shop/pages/CommodityList.dart';
 import 'package:mi_shop/pages/Tabs.dart';
 import 'package:mi_shop/pages/Cart.dart';
 import 'package:mi_shop/pages/Category.dart';
@@ -14,7 +14,9 @@ final Map<String, WidgetBuilder> routes = {
   '/category': (context) => Category(),
   '/product': (context, {arguments}) => Product(arguments: arguments),
   '/activity': (context, {arguments}) => Activity(arguments: arguments),
-  '/mine': (context, {arguments}) => Mine(),
+  '/mine': (context) => Mine(),
+  '/commoditylist': (context, {arguments}) =>
+      CommodityList(arguments: arguments),
 };
 
 var handleGenerateRoute = (RouteSettings settings) {
