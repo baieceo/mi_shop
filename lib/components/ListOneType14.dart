@@ -34,9 +34,8 @@ class MyComponent extends State<ListOneType14> {
               children: <Widget>[
                 new Stack(
                   children: <Widget>[
-                    new FadeInImage.assetNetwork(
-                      placeholder: 'images/placeholder.png',
-                      image: handleUrl(item['img_url']),
+                    new Image(
+                      image: NetworkImage(handleUrl(item['img_url'])),
                     ),
                     item['product_tag_array'] != null &&
                             item['product_tag_array'].length > 0
