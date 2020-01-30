@@ -4,7 +4,9 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:mi_shop/components/Gallery.dart';
 import 'package:mi_shop/http/index.dart';
 import 'package:mi_shop/http/api.dart';
+import 'package:mi_shop/providers/cart.dart';
 import 'package:mi_shop/utils/index.dart';
+import 'package:provider/provider.dart';
 
 class Product extends StatefulWidget {
   final Map arguments;
@@ -135,7 +137,14 @@ class Page extends State<Product> {
           relatedRecommend.add(new Container(
             child: new GestureDetector(
               onTap: () {
-                print('点击推荐');
+                print(item);
+                Navigator.pushNamed(
+                  context,
+                  '/product',
+                  arguments: {
+                    'product_id': item['product_id'].toString(),
+                  },
+                );
               },
               child: new Column(
                 children: <Widget>[
@@ -452,12 +461,21 @@ class Page extends State<Product> {
                   highlightColor: Color(0xffff9700),
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
                   child: Text(
-                    '立即购买',
+                    '加入购物车',
                     style: TextStyle(color: Colors.white, fontSize: 18),
                   ),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0)),
-                  onPressed: () {},
+                  onPressed: () async {
+                    print(goodsInfo);
+                    await Provider.of<CartProvider>(context).save(
+                      goodsInfo['goods_id'],
+                      goodsInfo['name'],
+                      1,
+                      double.parse(goodsInfo['price']),
+                      goodsInfo['img_url'],
+                    );
+                  },
                 ),
               ),
             ),
@@ -503,12 +521,17 @@ class Page extends State<Product> {
   }
 
   void requestAPI() async {
+    String productId =
+        widget.arguments != null && widget.arguments['product_id'] != null
+            ? widget.arguments['product_id'].toString()
+            : '10138';
+
     var res = await Http.post(path: PRODUCT_VIEW, data: {
       'client_id': '180100031051',
       'channel_id': '',
       'webp': '1',
-      'commodity_id': widget.arguments['product_id'],
-      'pid': widget.arguments['product_id'],
+      'commodity_id': productId,
+      'pid': productId,
     });
 
     setState(() {

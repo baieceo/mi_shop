@@ -43,30 +43,32 @@ class Page extends State<Category> {
   Widget layout(BuildContext context) {
     return new Scaffold(
       backgroundColor: Colors.transparent,
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            flex: 0,
-            child: navBar(context),
-          ),
-          Expanded(
-            flex: 1,
-            child: Row(
-              children: <Widget>[
-                // 左侧栏
-                Expanded(
-                  flex: 1,
-                  child: sideBar(context),
-                ),
-                // 主体
-                Expanded(
-                  flex: 3,
-                  child: mainBody(context),
-                ),
-              ],
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              flex: 0,
+              child: navBar(context),
             ),
-          ),
-        ],
+            Expanded(
+              flex: 1,
+              child: Row(
+                children: <Widget>[
+                  // 左侧栏
+                  Expanded(
+                    flex: 1,
+                    child: sideBar(context),
+                  ),
+                  // 主体
+                  Expanded(
+                    flex: 3,
+                    child: mainBody(context),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

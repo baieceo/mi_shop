@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:mi_shop/routes/Routes.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(MyApp());
+import 'package:mi_shop/routes/Routes.dart';
+import 'package:mi_shop/providers/cart.dart';
+
+void main() {
+  List<SingleChildCloneableWidget> providers = [];
+
+  providers..add(ChangeNotifierProvider.value(value: CartProvider()));
+
+  runApp(MultiProvider(
+    providers: providers,
+    child: MyApp(),
+  ));
+}
 
 class MyApp extends StatelessWidget {
   static const String _title = '小米商城';
@@ -11,7 +23,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: _title,
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: '/product',
       onGenerateRoute: handleGenerateRoute,
     );
   }

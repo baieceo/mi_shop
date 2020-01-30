@@ -87,7 +87,7 @@ class Page extends State<Activity> {
 
   Widget layout(BuildContext context) {
     return new Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       body: new Stack(
         children: <Widget>[
           new Container(
@@ -126,8 +126,8 @@ class Page extends State<Activity> {
         'webp': '0',
         'time': '1580301629830',
       },
-      options: {
-        'callbackParamQuery': 'cb_home',
+      callback: {
+        'param': 'cb_home',
       },
     );
 

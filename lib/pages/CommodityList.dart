@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mi_shop/components/RecommendList.dart';
 import 'package:mi_shop/http/api.dart';
 import 'package:mi_shop/http/index.dart';
 import 'package:mi_shop/utils/index.dart';
@@ -137,10 +138,10 @@ class Page extends State<CommodityList> {
 
   // 商品列表
   List<Widget> listRender(BuildContext context) {
-    List<Widget> list = [];
+    List<Widget> components = [];
 
     listData.forEach((item) {
-      list.add(new Container(
+      components.add(new Container(
         child: new GestureDetector(
           onTap: () {
             Navigator.pushNamed(
@@ -218,7 +219,12 @@ class Page extends State<CommodityList> {
       ));
     });
 
-    return list;
+    components.add(new RecommendList(
+      referer: 'https://m.mi.com/commodity/list/' +
+          widget.arguments['id'].toString(),
+    ));
+
+    return components;
   }
 
   void requestAPI() async {

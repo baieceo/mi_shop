@@ -28,6 +28,8 @@ dependencies:
   flutter_screenutil: ^1.0.2
   flutter_html: ^0.11.1
   english_words: ^3.1.5
+  provider: ^3.1.0
+  shared_preferences: ^0.5.6+1
 
 dev_dependencies:
   flutter_test:
@@ -50,6 +52,7 @@ flutter:
     - images/logo.png
     - images/placeholder.png
     - images/user.png
+    - images/cart.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
