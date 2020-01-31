@@ -18,11 +18,13 @@ class CartInfoModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+
     data['goodsId'] = this.goodsId;
     data['goodsName'] = this.goodsName;
     data['count'] = this.count;
     data['price'] = this.price;
     data['images'] = this.images;
+
     return data;
   }
 }

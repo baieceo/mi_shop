@@ -29,6 +29,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.5"
+  bottom_navigation_badge:
+    dependency: "direct main"
+    description:
+      name: bottom_navigation_badge
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.3"
   charcode:
     dependency: transitive
     description:

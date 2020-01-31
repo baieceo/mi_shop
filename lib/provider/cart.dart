@@ -12,12 +12,16 @@ class CartProvider with ChangeNotifier {
   // 异步方法, 购物车操作
   save(goodsId, goodsName, count, price, images) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     cartString = prefs.getString('cartInfo'); // 持久化获取
+
     var temp = cartString == null ? [] : json.decode(cartString.toString());
+
     // 声明 list 强制类型是 Map
     List<Map> tempList = (temp as List).cast(); // 把 temp 转成 list
     bool isHave = false; // 是否已经存在了这条记录
     int ival = 0; // foreach 循环的索引
+
     // 循环判断列表是否存在该 goodsId 的商品，如果有就数量 +1
     tempList.forEach((item) {
       if (item['goodsId'] == goodsId) {
@@ -28,6 +32,7 @@ class CartProvider with ChangeNotifier {
       }
       ival++;
     });
+
     // 没有不存在这个商品，就把商品的 json 数据加入的 tempList 中
     if (!isHave) {
       Map<String, dynamic> newGoods = {
@@ -38,6 +43,7 @@ class CartProvider with ChangeNotifier {
         'images': images
       };
       tempList.add(newGoods);
+
       _cartList.add(CartInfoModel.fromJson(newGoods));
     }
     cartString = json.encode(tempList).toString(); // json 数据转字符串
@@ -57,6 +63,18 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  getCartCount() async {
+    List cartList = await getCartInfo() as List;
+
+    int total = 0;
+
+    cartList.forEach((item) {
+      total = total + item.toJson()['count'];
+    });
+
+    return total;
+  }
+
   getCartInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -74,8 +92,8 @@ class CartProvider with ChangeNotifier {
       });
     }
 
-    // print(_cartList);
-
     notifyListeners(); // 通知
+
+    return _cartList;
   }
 }
