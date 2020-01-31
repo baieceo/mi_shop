@@ -73,7 +73,9 @@ class Page extends State<Cart> {
 
   // 渲染购物车
   Widget renderCartList(BuildContext context, AsyncSnapshot snapshot) {
-    if (snapshot.data.length != null && snapshot.data.length != 0) {
+    if (snapshot.data != null &&
+        snapshot.data.length != null &&
+        snapshot.data.length != 0) {
       cartList = [];
 
       snapshot.data.forEach((item) {
@@ -345,7 +347,9 @@ class Page extends State<Cart> {
 
   // 渲染底部
   Widget renderFooter(BuildContext context, AsyncSnapshot snapshot) {
-    if (snapshot.data.length > 0) {
+    if (snapshot.data != null &&
+        snapshot.data.length != null &&
+        snapshot.data.length > 0) {
       return new Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -365,7 +369,7 @@ class Page extends State<Cart> {
               flex: 1,
               child: new Container(
                 padding:
-                    EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(20)),
+                    EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(10)),
                 child: new Column(
                   children: <Widget>[
                     new FutureBuilder(

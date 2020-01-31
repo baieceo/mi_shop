@@ -16,7 +16,7 @@ class Tabs extends StatefulWidget {
 }
 
 class _TabsState extends State<Tabs> {
-  int _selectedIndex = 2;
+  int _selectedIndex = 0;
   var _pageListr = [
     new Home(),
     new Category(),
@@ -71,7 +71,7 @@ class _TabsState extends State<Tabs> {
     return new FutureBuilder(
       future: _getCartCount(context),
       builder: (context, snapshot) {
-        if (snapshot.data != 0) {
+        if (snapshot.data != null && snapshot.data != 0) {
           items = badger.setBadge(items, snapshot.data.toString(), 2);
         }
 

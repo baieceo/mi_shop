@@ -85,7 +85,7 @@ class MyComponent extends State<ListTwoType4> {
         crossAxisCount: 2,
         crossAxisSpacing: 5,
         mainAxisSpacing: 30,
-        childAspectRatio: 205 / 290,
+        childAspectRatio: 205 / 300,
       ),
       padding: EdgeInsets.symmetric(horizontal: 0),
       children: components,
