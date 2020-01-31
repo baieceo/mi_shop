@@ -4,7 +4,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:mi_shop/components/Gallery.dart';
 import 'package:mi_shop/http/index.dart';
 import 'package:mi_shop/http/api.dart';
-import 'package:mi_shop/providers/cart.dart';
+import 'package:mi_shop/provider/cart.dart';
 import 'package:mi_shop/utils/index.dart';
 import 'package:provider/provider.dart';
 
@@ -248,6 +248,7 @@ class Page extends State<Product> {
             space: 3.5,
             size: 5.0,
           ),
+          new Text('1111111111111111'),
           // 产品名称
           new Container(
             padding: EdgeInsets.fromLTRB(18, 18, 18, 0),
@@ -466,12 +467,15 @@ class Page extends State<Product> {
                   ),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0)),
+                  /* onPressed: () async {
+                    await Provider.of<CartProvider>(context).remove();
+                  }, */
                   onPressed: () async {
-                    print(goodsInfo);
+                    //print(goodsInfo);
                     await Provider.of<CartProvider>(context).save(
-                      goodsInfo['goods_id'],
+                      goodsInfo['goods_id'].toString(),
                       goodsInfo['name'],
-                      1,
+                      2,
                       double.parse(goodsInfo['price']),
                       goodsInfo['img_url'],
                     );
@@ -488,34 +492,44 @@ class Page extends State<Product> {
   Widget layout(BuildContext context) {
     return new Scaffold(
       backgroundColor: Colors.transparent,
-      body: new Stack(
-        children: <Widget>[
-          new Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-            ),
-            // padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-            child: mainBody(context),
-          ),
-          new Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: new Container(
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(0, 0, 0, 0),
-              ),
-              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-              child: topBar(context),
-            ),
-          ),
-          new Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: actionBar(context),
-          ),
-        ],
+      body: new FutureBuilder(
+        future: _getCartInfo(context),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return new Stack(
+              children: <Widget>[
+                new Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                  ),
+                  // padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+                  child: mainBody(context),
+                ),
+                new Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: new Container(
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(0, 0, 0, 0),
+                    ),
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).padding.top),
+                    child: topBar(context),
+                  ),
+                ),
+                new Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: actionBar(context),
+                ),
+              ],
+            );
+          } else {
+            return Text('正在加载');
+          }
+        },
       ),
     );
   }
@@ -539,5 +553,12 @@ class Page extends State<Product> {
       goodsInfo = pageData['goods_info'][0];
       loading = false;
     });
+  }
+
+  // 获取购物车数据
+  Future<String> _getCartInfo(BuildContext context) async {
+    await Provider.of<CartProvider>(context).getCartInfo();
+
+    return 'end';
   }
 }

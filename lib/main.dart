@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mi_shop/routes/Routes.dart';
-import 'package:mi_shop/providers/cart.dart';
+import 'package:mi_shop/provider/cart.dart';
 
 void main() {
   List<SingleChildCloneableWidget> providers = [];
 
+  // 注册 Provider providers..add()..add()
   providers..add(ChangeNotifierProvider.value(value: CartProvider()));
 
   runApp(MultiProvider(
