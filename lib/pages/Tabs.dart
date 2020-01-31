@@ -16,7 +16,7 @@ class Tabs extends StatefulWidget {
 }
 
 class _TabsState extends State<Tabs> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 2;
   var _pageListr = [
     new Home(),
     new Category(),
@@ -55,6 +55,13 @@ class _TabsState extends State<Tabs> {
     setState(() {
       _selectedIndex = index;
     });
+
+    if (_selectedIndex == 2) {
+      Navigator.pushNamed(
+        context,
+        '/cart',
+      );
+    }
   }
 
   @override

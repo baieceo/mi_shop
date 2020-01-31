@@ -22,14 +22,16 @@ class CartProvider with ChangeNotifier {
     bool isHave = false; // 是否已经存在了这条记录
     int ival = 0; // foreach 循环的索引
 
-    // 循环判断列表是否存在该 goodsId 的商品，如果有就数量 +1
+    // 循环判断列表是否存在该 goodsId 的商品，如果有就数量 +count
     tempList.forEach((item) {
       if (item['goodsId'] == goodsId) {
-        tempList[ival]['count'] = item['count'] + 1;
-        _cartList[ival].count++;
+        tempList[ival]['count'] = item['count'] + count;
+
+        _cartList[ival].count += count;
 
         isHave = true;
       }
+
       ival++;
     });
 
@@ -37,29 +39,63 @@ class CartProvider with ChangeNotifier {
     if (!isHave) {
       Map<String, dynamic> newGoods = {
         'goodsId': goodsId, // 传入进来的值
-        'goodsNmae': goodsName,
+        'goodsName': goodsName,
         'count': count,
         'price': price,
         'images': images
       };
+
       tempList.add(newGoods);
 
       _cartList.add(CartInfoModel.fromJson(newGoods));
     }
+
     cartString = json.encode(tempList).toString(); // json 数据转字符串
+
     // print('字符串》》》》》》》》》》》${cartString}');
     // print('字符串》》》》》》》》》》》${_cartList}');
 
     prefs.setString('cartInfo', cartString);
+
     notifyListeners();
   }
 
-  remove() async {
+  remove(String goodsId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('cartInfo');
-    _cartList = [];
+    cartString = prefs.getString('cartInfo');
 
-    print('清空完成----------------------');
+    if (goodsId != null) {
+      var temp = cartString == null ? [] : json.decode(cartString.toString());
+
+      List<Map> tempList = (temp as List).cast();
+      int targetIndex = -1;
+      int index = 0;
+
+      tempList.forEach((item) {
+        if (item['goodsId'] == goodsId) {
+          targetIndex = index;
+        }
+
+        index++;
+      });
+
+      if (targetIndex != -1) {
+        tempList.removeAt(targetIndex);
+      }
+
+      cartString = json.encode(tempList).toString();
+
+      prefs.setString('cartInfo', cartString);
+
+      print('已删除：' + goodsId);
+    } else {
+      prefs.remove('cartInfo');
+
+      _cartList = [];
+
+      print('清空购物车');
+    }
+
     notifyListeners();
   }
 
@@ -70,6 +106,18 @@ class CartProvider with ChangeNotifier {
 
     cartList.forEach((item) {
       total = total + item.toJson()['count'];
+    });
+
+    return total;
+  }
+
+  getCartTotalPrice() async {
+    List cartList = await getCartInfo() as List;
+
+    double total = 0;
+
+    cartList.forEach((item) {
+      total = total + (item.toJson()['price'] * item.toJson()['count']);
     });
 
     return total;
@@ -86,6 +134,7 @@ class CartProvider with ChangeNotifier {
     } else {
       // 声明临时的变量
       List<Map> tempList = (json.decode(cartString.toString()) as List).cast();
+
       tempList.forEach((item) {
         _cartList
             .add(CartInfoModel.fromJson(item)); // json 转成对象，加入到 _cartList 中

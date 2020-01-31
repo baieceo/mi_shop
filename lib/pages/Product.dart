@@ -496,7 +496,7 @@ class Page extends State<Product> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0)),
                   onPressed: () async {
-                    //print(goodsInfo);
+                    // print(goodsInfo['name']);
                     await Provider.of<CartProvider>(context).save(
                       goodsInfo['goods_id'].toString(),
                       goodsInfo['name'],
