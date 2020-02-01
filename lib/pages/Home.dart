@@ -127,9 +127,12 @@ class Page extends State<Home> {
                     )
                   : new Container(
                       padding: EdgeInsets.only(bottom: 50),
-                      child: new PageRender(
-                        data: pageData['data']['sections'],
-                      ),
+                      child: pageData['data'] != null &&
+                              pageData['data']['sections'] != null
+                          ? new PageRender(
+                              data: pageData['data']['sections'],
+                            )
+                          : new Container(),
                     ),
             ),
           ),

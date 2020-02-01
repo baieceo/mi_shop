@@ -54,6 +54,18 @@ flutter:
     - images/placeholder.png
     - images/user.png
     - images/cart.png
+    - images/mine-header-bg.png
+    - images/mine-avatar-default.png
+    - images/icon-wallet.png
+    - images/icon-car.png
+    - images/icon-setting.png
+    - images/icon-vip.png
+    - images/icon-coupon.png
+    - images/icon-service.png
+    - images/icon-home.png
+    - images/icon-fcode.png
+    - images/icon-gift.png
+    - images/icon-gear.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
