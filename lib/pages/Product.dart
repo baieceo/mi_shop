@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:mi_shop/components/Badge.dart';
-import 'package:mi_shop/components/Gallery.dart';
+import 'package:mi_shop/components/view/Gallery.dart';
 import 'package:mi_shop/http/index.dart';
 import 'package:mi_shop/http/api.dart';
 import 'package:mi_shop/provider/cart.dart';

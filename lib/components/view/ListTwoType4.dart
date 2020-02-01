@@ -27,10 +27,18 @@ class MyComponent extends State<ListTwoType4> {
         child: new Container(
           child: new Column(
             children: <Widget>[
-              new Image(
-                image: NetworkImage(handleUrl(item['image_url'])),
-                height: 208,
-                fit: BoxFit.cover,
+              new Container(
+                decoration: BoxDecoration(
+                  color: Color(0xfff5f5f5),
+                  image: new DecorationImage(
+                    image: AssetImage('images/placeholder.png'),
+                  ),
+                ),
+                child: new Image(
+                  image: NetworkImage(handleUrl(item['image_url'])),
+                  height: 208,
+                  fit: BoxFit.cover,
+                ),
               ),
               new Container(
                 padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),

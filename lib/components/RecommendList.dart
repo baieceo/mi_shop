@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mi_shop/components/ListTwoType4.dart';
+import 'package:mi_shop/components/view/ListTwoType4.dart';
 import 'package:mi_shop/http/api.dart';
 import 'package:mi_shop/http/index.dart';
 import 'package:mi_shop/utils/index.dart';

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:mi_shop/components/Gallery.dart';
-import 'package:mi_shop/components/CellsAutoFill.dart';
-import 'package:mi_shop/components/DividerLine.dart';
-import 'package:mi_shop/components/ListTwoType1.dart';
-import 'package:mi_shop/components/ListTwoType2.dart';
-import 'package:mi_shop/components/ListTwoType3.dart';
-import 'package:mi_shop/components/ListThreeType4.dart';
-import 'package:mi_shop/components/ListTwoType13.dart';
-import 'package:mi_shop/components/ListTwoType14.dart';
-import 'package:mi_shop/components/ListOneType14.dart';
-import 'package:mi_shop/components/ListOneType15.dart';
-import 'package:mi_shop/components/ListActionTitle.dart';
-import 'package:mi_shop/components/CategoryTitle.dart';
-import 'package:mi_shop/components/CategoryGroup.dart';
+import 'package:mi_shop/components/view/Gallery.dart';
+import 'package:mi_shop/components/view/CellsAutoFill.dart';
+import 'package:mi_shop/components/view/DividerLine.dart';
+import 'package:mi_shop/components/view/ListTwoType1.dart';
+import 'package:mi_shop/components/view/ListTwoType2.dart';
+import 'package:mi_shop/components/view/ListTwoType3.dart';
+import 'package:mi_shop/components/view/ListThreeType4.dart';
+import 'package:mi_shop/components/view/ListTwoType13.dart';
+import 'package:mi_shop/components/view/ListTwoType14.dart';
+import 'package:mi_shop/components/view/ListOneType14.dart';
+import 'package:mi_shop/components/view/ListOneType15.dart';
+import 'package:mi_shop/components/view/ListActionTitle.dart';
+import 'package:mi_shop/components/view/CategoryTitle.dart';
+import 'package:mi_shop/components/view/CategoryGroup.dart';
 
 class PageRender extends StatefulWidget {
   final List data;

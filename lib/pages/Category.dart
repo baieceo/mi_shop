@@ -115,7 +115,7 @@ class Page extends State<Category> {
               icon: Icon(Icons.search),
               splashColor: Colors.transparent,
               onPressed: () {
-                print('搜索');
+                Navigator.pushNamed(context, '/search');
               },
             ),
           ),
