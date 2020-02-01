@@ -4,3 +4,4 @@ const PRODUCT_VIEW = '/miproduct/view';
 const ACTIVITY_PAGE = 'home/activityPage';
 const COMMODITY_LIST = '/home/commodityList';
 const RECOMMEND_BLANK = '/home/recommendBlank';
+const SEARCH_DEFAULT = '/hisearch/se_default';

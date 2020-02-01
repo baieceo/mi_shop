@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mi_shop/utils/index.dart';
 
 class CellsAutoFill extends StatefulWidget {
   final Map data;
-  CellsAutoFill({Key key, this.data}) : super(key: key);
+  final bool autoFill;
+  const CellsAutoFill({Key key, this.data, this.autoFill}) : super(key: key);
   @override
   createState() => new MyComponent();
 }
@@ -16,6 +18,7 @@ class MyComponent extends State<CellsAutoFill> {
     if (widget.data != null &&
         widget.data['items'] != null &&
         widget.data['items'].length > 0) {
+      // print(widget.data['items']);
       widget.data['items'].forEach((item) {
         var x = item['x'];
         var y = item['y'];
@@ -30,15 +33,16 @@ class MyComponent extends State<CellsAutoFill> {
           y = 0;
         }
 
-        x = ScreenUtil().setWidth(x);
-        y = ScreenUtil().setWidth(y);
-        w = ScreenUtil().setWidth(w);
-        h = ScreenUtil().setWidth(h);
-
-        RegExp isUri = new RegExp(r'^\/\/');
-
-        if (isUri.hasMatch(item['img_url'])) {
-          item['img_url'] = 'https:' + item['img_url'];
+        if (widget.autoFill == true) {
+          x = null;
+          y = null;
+          w = null;
+          h = null;
+        } else {
+          x = ScreenUtil().setWidth(x);
+          y = ScreenUtil().setWidth(y);
+          w = ScreenUtil().setWidth(w);
+          h = ScreenUtil().setWidth(h);
         }
 
         components.add(Positioned(
@@ -86,16 +90,21 @@ class MyComponent extends State<CellsAutoFill> {
               }
             },
             child: Image(
-              image: NetworkImage(item['img_url']),
+              image: NetworkImage(handleUrl(item['img_url'])),
               width: w,
+              height: h,
             ),
           ),
         ));
       });
 
       return Container(
-        width: ScreenUtil().setWidth(widget.data['w']),
-        height: ScreenUtil().setWidth(widget.data['h']),
+        width: widget.autoFill == true
+            ? null
+            : ScreenUtil().setWidth(widget.data['w']),
+        height: widget.autoFill == true
+            ? null
+            : ScreenUtil().setWidth(widget.data['h']),
         child: Stack(
           children: components,
         ),

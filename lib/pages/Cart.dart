@@ -64,7 +64,7 @@ class Page extends State<Cart> {
           icon: Icon(Icons.search),
           splashColor: Colors.transparent,
           onPressed: () {
-            print('搜索');
+            Navigator.pushNamed(context, '/search');
           },
         ),
       ),

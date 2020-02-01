@@ -60,6 +60,9 @@ class Page extends State<Home> {
               ),
               Expanded(
                 child: new TextField(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/search');
+                  },
                   decoration: new InputDecoration(
                     hintText: '搜索商品名称',
                     hintStyle: new TextStyle(
