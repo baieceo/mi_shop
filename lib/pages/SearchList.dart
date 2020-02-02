@@ -37,12 +37,12 @@ class Page extends State<SearchList> {
     return layout(context);
   }
 
-  TextEditingController _keyController = TextEditingController();
+  TextEditingController _searchKeyController = TextEditingController();
 
   // 渲染头部
   Widget renderSearchBar(BuildContext context) {
     if (widget.arguments != null && widget.arguments['key'] != null) {
-      _keyController.text = widget.arguments['key'];
+      _searchKeyController.text = widget.arguments['key'];
     }
 
     return new HeaderNav(
@@ -68,7 +68,7 @@ class Page extends State<SearchList> {
               maxHeight: ScreenUtil().setWidth(52),
             ),
             child: new TextField(
-              controller: _keyController,
+              controller: _searchKeyController,
               autofocus: false,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.symmetric(
@@ -107,7 +107,7 @@ class Page extends State<SearchList> {
             Navigator.pushNamed(
               context,
               '/searchlist',
-              arguments: {'key': _keyController.text},
+              arguments: {'key': _searchKeyController.text},
             );
           },
         ),

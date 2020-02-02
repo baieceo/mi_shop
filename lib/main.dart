@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: _title,
       debugShowCheckedModeBanner: false,
-      initialRoute: '/searchlist',
+      initialRoute: '/',
       onGenerateRoute: handleGenerateRoute,
     );
   }
