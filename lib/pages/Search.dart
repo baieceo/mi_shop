@@ -15,6 +15,7 @@ class Search extends StatefulWidget {
 
 class Page extends State<Search> {
   Map pageData;
+  TextEditingController _searchKeyController = TextEditingController();
 
   @override
   void initState() {
@@ -48,6 +49,7 @@ class Page extends State<Search> {
             ),
             child: new TextField(
               autofocus: false,
+              controller: _searchKeyController,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.symmetric(
                     horizontal: ScreenUtil().setWidth(20), vertical: 0),
@@ -64,6 +66,13 @@ class Page extends State<Search> {
               ),
               cursorColor: Colors.grey,
               textInputAction: TextInputAction.search,
+              onSubmitted: (String value) {
+                Navigator.pushNamed(
+                  context,
+                  '/searchlist',
+                  arguments: {'key': value},
+                );
+              },
             ),
           ),
         ),
@@ -75,7 +84,11 @@ class Page extends State<Search> {
           icon: Icon(Icons.search),
           splashColor: Colors.transparent,
           onPressed: () {
-            print('搜索');
+            Navigator.pushNamed(
+              context,
+              '/searchlist',
+              arguments: {'key': _searchKeyController.text},
+            );
           },
         ),
       ),
@@ -140,7 +153,11 @@ class Page extends State<Search> {
       pageData['keywords'].forEach((item) {
         keyList.add(new GestureDetector(
           onTap: () {
-            print('点击关键词');
+            Navigator.pushNamed(
+              context,
+              '/searchlist',
+              arguments: {'key': item['word']},
+            );
           },
           child: new Container(
             padding: EdgeInsets.symmetric(
@@ -189,7 +206,11 @@ class Page extends State<Search> {
       pageData['hot_class'].forEach((item) {
         hotList.add(new GestureDetector(
           onTap: () {
-            print('点击常用分类');
+            Navigator.pushNamed(
+              context,
+              '/searchlist',
+              arguments: {'key': item['name']},
+            );
           },
           child: new Container(
             padding: EdgeInsets.symmetric(
