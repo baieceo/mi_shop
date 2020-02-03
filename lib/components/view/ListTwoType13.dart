@@ -134,7 +134,15 @@ class MyComponent extends State<ListTwoType13> {
                             color: Color(handleColor(widget.data['btn_color'])),
                             textColor: Color(
                                 handleColor(widget.data['btn_txt_color'])),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context,
+                                '/product',
+                                arguments: {
+                                  'product_id': item['product_id'],
+                                },
+                              );
+                            },
                           )
                         ],
                       ),

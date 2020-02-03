@@ -125,7 +125,15 @@ class MyComponent extends State<ListOneType14> {
                             textColor: Color(
                                 handleColor(widget.data['btn_txt_color'])),
                             child: Text(item['btn_txt'] ?? '立即购买'),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context,
+                                '/product',
+                                arguments: {
+                                  'product_id': item['product_id'],
+                                },
+                              );
+                            },
                           ),
                         ],
                       ),
