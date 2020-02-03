@@ -52,15 +52,15 @@ class _TabsState extends State<Tabs> {
   ];
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-
-    if (_selectedIndex == 2) {
+    if (index == 2) {
       Navigator.pushNamed(
         context,
         '/cart',
       );
+    } else {
+      setState(() {
+        _selectedIndex = index;
+      });
     }
   }
 
@@ -76,6 +76,7 @@ class _TabsState extends State<Tabs> {
         }
 
         return Scaffold(
+          backgroundColor: Colors.white,
           body: Center(
             child: SafeArea(
               child: _pageListr[_selectedIndex],

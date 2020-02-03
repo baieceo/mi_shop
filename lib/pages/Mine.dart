@@ -95,7 +95,7 @@ class Page extends State<Mine> {
           // 登录
           new GestureDetector(
             onTap: () {
-              print('登录/注册');
+              Navigator.pushNamed(context, '/login');
             },
             child: new Text(
               '登录/注册',

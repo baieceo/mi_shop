@@ -83,18 +83,6 @@ class Page extends State<Category> {
       child: Row(
         children: <Widget>[
           Expanded(
-            flex: 0,
-            child: IconButton(
-              color: Color(0XFFCCCCCC),
-              iconSize: 25.0,
-              icon: Icon(Icons.arrow_back_ios),
-              splashColor: Colors.transparent,
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-          Expanded(
             flex: 1,
             child: Container(
               alignment: Alignment.center,
@@ -109,13 +97,16 @@ class Page extends State<Category> {
           ),
           Expanded(
             flex: 0,
-            child: IconButton(
+            child: new IconButton(
               color: Color(0XFFCCCCCC),
-              iconSize: 35.0,
+              iconSize: ScreenUtil().setWidth(50),
               icon: Icon(Icons.search),
               splashColor: Colors.transparent,
               onPressed: () {
-                Navigator.pushNamed(context, '/search');
+                Navigator.pushNamed(
+                  context,
+                  '/search',
+                );
               },
             ),
           ),
@@ -169,7 +160,7 @@ class Page extends State<Category> {
                 color: item['category_id'] == _selectedIndex
                     ? Color(0xfffb7d34)
                     : Color(0xff3c3c3c),
-                fontSize: ScreenUtil().setSp(28),
+                fontSize: ScreenUtil().setSp(22),
               ),
               textScaleFactor:
                   item['category_id'] == _selectedIndex ? 1.2 : 1.0,

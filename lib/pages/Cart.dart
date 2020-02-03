@@ -60,11 +60,14 @@ class Page extends State<Cart> {
       right: new Container(
         child: new IconButton(
           color: Color(0XFFCCCCCC),
-          iconSize: 35.0,
+          iconSize: ScreenUtil().setWidth(50),
           icon: Icon(Icons.search),
           splashColor: Colors.transparent,
           onPressed: () {
-            Navigator.pushNamed(context, '/search');
+            Navigator.pushNamed(
+              context,
+              '/search',
+            );
           },
         ),
       ),
@@ -315,22 +318,27 @@ class Page extends State<Cart> {
                 ScreenUtil().setSp(32),
                 0,
               ),
-              child: new Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  new Text(
-                    '登陆后享受更多优惠',
-                    style: TextStyle(
-                        color: Color(0xff212121),
-                        fontSize: ScreenUtil().setSp(32)),
-                  ),
-                  new Text(
-                    '去登录 >',
-                    style: TextStyle(
-                        color: Color(0xff757575),
-                        fontSize: ScreenUtil().setSp(24)),
-                  ),
-                ],
+              child: new GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/login');
+                },
+                child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    new Text(
+                      '登陆后享受更多优惠',
+                      style: TextStyle(
+                          color: Color(0xff212121),
+                          fontSize: ScreenUtil().setSp(32)),
+                    ),
+                    new Text(
+                      '去登录 >',
+                      style: TextStyle(
+                          color: Color(0xff757575),
+                          fontSize: ScreenUtil().setSp(24)),
+                    ),
+                  ],
+                ),
               ),
             ),
             // 渲染购物车
@@ -376,7 +384,9 @@ class Page extends State<Cart> {
                       future: _getCartCount(context),
                       builder: (context, snap) {
                         return new Text(
-                          '共' + snap.data.toString() + '件 金额：',
+                          '共' +
+                              (snap.data == null ? '0' : snap.data.toString()) +
+                              '件 金额：',
                           style: TextStyle(
                             color: Color(0xff999999),
                             fontSize: ScreenUtil().setSp(24),
@@ -391,7 +401,9 @@ class Page extends State<Cart> {
                           TextSpan(
                             children: [
                               new TextSpan(
-                                text: snap.data.toString(),
+                                text: snap.data == null
+                                    ? '0'
+                                    : snap.data.toString(),
                                 style: TextStyle(
                                   color: Color(0xffff5722),
                                   fontSize: ScreenUtil().setSp(32),
@@ -440,7 +452,7 @@ class Page extends State<Cart> {
                 color: Color(0xffff6700),
                 textColor: Color(0xffffffff),
                 onPressed: () {
-                  print('去结算');
+                  Navigator.pushNamed(context, '/login');
                 },
               ),
             ),
