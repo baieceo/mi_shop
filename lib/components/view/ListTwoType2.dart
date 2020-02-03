@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ListTwoType3 extends StatefulWidget {
+class ListTwoType2 extends StatefulWidget {
   final Map data;
-  ListTwoType3({Key key, this.data}) : super(key: key);
+  ListTwoType2({Key key, this.data}) : super(key: key);
   @override
   createState() => new MyComponent();
 }
 
-class MyComponent extends State<ListTwoType3> {
+class MyComponent extends State<ListTwoType2> {
   @override
   Widget build(BuildContext context) {
     List<Widget> components = [];
@@ -44,6 +44,24 @@ class MyComponent extends State<ListTwoType3> {
             ),
           ));
         }
+
+        components.add(
+          GestureDetector(
+            child: Image(
+              image: NetworkImage(item['img_url']),
+              width: w,
+            ),
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                '/product',
+                arguments: {
+                  'product_id': item['product_id'],
+                },
+              );
+            },
+          ),
+        );
 
         components.add(
           GestureDetector(
@@ -85,17 +103,15 @@ class MyComponent extends State<ListTwoType3> {
                 ],
               ),
             ),
-            onTap: () {},
-          ),
-        );
-
-        components.add(
-          GestureDetector(
-            child: Image(
-              image: NetworkImage(item['img_url']),
-              width: w,
-            ),
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                '/product',
+                arguments: {
+                  'product_id': item['product_id'],
+                },
+              );
+            },
           ),
         );
       });

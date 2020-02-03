@@ -27,6 +27,10 @@ dependencies:
   flutter_swiper: ^1.1.6
   flutter_screenutil: ^1.0.2
   flutter_html: ^0.11.1
+  english_words: ^3.1.5
+  provider: ^3.1.0
+  shared_preferences: ^0.5.6+1
+  bottom_navigation_badge: ^1.0.3
 
 dev_dependencies:
   flutter_test:
@@ -49,6 +53,20 @@ flutter:
     - images/logo.png
     - images/placeholder.png
     - images/user.png
+    - images/cart.png
+    - images/mine-header-bg.png
+    - images/mine-avatar-default.png
+    - images/icon-wallet.png
+    - images/icon-car.png
+    - images/icon-setting.png
+    - images/icon-vip.png
+    - images/icon-coupon.png
+    - images/icon-service.png
+    - images/icon-home.png
+    - images/icon-fcode.png
+    - images/icon-gift.png
+    - images/icon-gear.png
+    - images/icon-search.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

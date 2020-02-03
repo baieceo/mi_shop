@@ -4,8 +4,12 @@ class HeaderNav extends StatefulWidget {
   final Container left;
   final Container right;
   final Container content;
+  final double height;
+  final Color color;
 
-  HeaderNav({Key key, this.left, this.right, this.content}) : super(key: key);
+  HeaderNav(
+      {Key key, this.left, this.right, this.content, this.height, this.color})
+      : super(key: key);
 
   @override
   createState() => new HeaderComponent();
@@ -16,9 +20,9 @@ class HeaderComponent extends State<HeaderNav> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Color(0xfff2f2f2),
+        color: widget.color ?? Color(0xfff2f2f2),
       ),
-      height: 40.0,
+      height: widget.height ?? 40.0,
       padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
       child: Row(
         children: <Widget>[

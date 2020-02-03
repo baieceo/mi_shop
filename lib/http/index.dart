@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 
 class Http {
@@ -7,7 +10,7 @@ class Http {
     connectTimeout: 60000,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Referer': 'https://m.mi.com/',
+      'Referer': 'https://m.mi.com/'
     },
   );
 
@@ -38,6 +41,38 @@ class Http {
       if (response.statusCode == 200) {
         return response.data['data'];
       }
+    } on DioError catch (e) {
+      formatError(e);
+    }
+  }
+
+  static jsonp({
+    @required String path,
+    Map<String, String> data = const {},
+    Map<String, dynamic> callback,
+  }) async {
+    try {
+      WordPair wordPair = new WordPair.random();
+      String query = 'callback';
+      String param = wordPair.toString();
+
+      if (callback['query'] != null) {
+        query = callback['query'];
+      }
+
+      if (callback['param'] != null) {
+        param = callback['param'];
+      }
+
+      data[query] = param;
+
+      Response response =
+          await dio.get<String>(path, queryParameters: addParam(data));
+
+      String result =
+          response.data.replaceAll(param + '(', '').replaceAll(');', '');
+
+      return json.decode(result);
     } on DioError catch (e) {
       formatError(e);
     }

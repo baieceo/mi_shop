@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ListTwoType13 extends StatefulWidget {
+class ListTwoType1 extends StatefulWidget {
   final Map data;
-  ListTwoType13({Key key, this.data}) : super(key: key);
+  ListTwoType1({Key key, this.data}) : super(key: key);
   @override
   createState() => new MyComponent();
 }
 
-class MyComponent extends State<ListTwoType13> {
+class MyComponent extends State<ListTwoType1> {
   @override
   Widget build(BuildContext context) {
-    var bgColor =
-        int.parse(widget.data['bg_color'].substring(1, 7), radix: 16) +
-            0xFF000000;
+    var bgColor = 0xffffffff;
     return Container(
       padding: EdgeInsets.only(left: 8.0),
       margin: EdgeInsets.all(0),
@@ -45,7 +43,7 @@ class MyComponent extends State<ListTwoType13> {
           image: NetworkImage(imgUrl),
           fit: BoxFit.cover,
           width: itemWidth,
-          height: ScreenUtil().setWidth(270),
+          height: itemWidth,
         ));
 
         if (item['product_tag_array'] != null &&
@@ -74,9 +72,7 @@ class MyComponent extends State<ListTwoType13> {
             text: '￥' + item['product_price'],
             style: TextStyle(
               fontSize: ScreenUtil().setSp(26),
-              color: Color(int.parse(widget.data['btn_color'].substring(1, 7),
-                      radix: 16) +
-                  0xFF000000),
+              color: Color(0xffea625b),
             )));
 
         if (item['product_price'] != item['product_org_price']) {
@@ -92,6 +88,15 @@ class MyComponent extends State<ListTwoType13> {
 
         items.add(
           GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                '/product',
+                arguments: {
+                  'product_id': item['product_id'],
+                },
+              );
+            },
             child: Container(
               margin: EdgeInsets.only(right: 8.0),
               child: Column(
@@ -131,20 +136,6 @@ class MyComponent extends State<ListTwoType13> {
                               children: prices,
                             ),
                           ),
-                          FlatButton(
-                            child: Text('立即购买'),
-                            padding: EdgeInsets.symmetric(horizontal: 30.0),
-                            color: Color(int.parse(
-                                    widget.data['btn_color'].substring(1, 7),
-                                    radix: 16) +
-                                0xFF000000),
-                            textColor: Color(int.parse(
-                                    widget.data['btn_txt_color']
-                                        .substring(1, 7),
-                                    radix: 16) +
-                                0xFF000000),
-                            onPressed: () {},
-                          )
                         ],
                       ),
                     ),

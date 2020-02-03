@@ -1,19 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:mi_shop/utils/index.dart';
 
 class Nav extends StatefulWidget {
   final Map tabs;
-  Nav({Key key, this.tabs}) : super(key: key);
+  final int pageId;
+  final Function onTap;
+
+  Nav({Key key, this.tabs, this.pageId, this.onTap}) : super(key: key);
   @override
   createState() => new MyComponent();
 }
 
 class MyComponent extends State<Nav> {
   int _pageId = 0;
+  String _pageType;
 
-  void _onItemTapped(int id) {
+  void _onItemTapped(String type, int id) {
     setState(() {
+      _pageType = type;
       _pageId = id;
     });
+
+    print(type);
+    print(id);
+
+    widget.onTap(_pageType, _pageId);
   }
 
   @override
@@ -58,31 +69,23 @@ class MyComponent extends State<Nav> {
                 border: new Border(
                     bottom: new BorderSide(
                         width: 2.0,
-                        color: item['page_id'] == _pageId
-                            ? Color(int.parse(
-                                    item['word_selected_color'].substring(1, 7),
-                                    radix: 16) +
-                                0xFF000000)
+                        color: item['page_id'] == widget.pageId
+                            ? Color(handleColor(item['word_selected_color']))
                             : Color(0x00000000))),
               ),
               child: Text(
                 item['name'],
-                style: item['page_id'] == _pageId
+                style: item['page_id'] == widget.pageId
                     ? TextStyle(
-                        color: Color(int.parse(
-                                item['word_selected_color'].substring(1, 7),
-                                radix: 16) +
-                            0xFF000000),
+                        color: Color(handleColor(item['word_selected_color'])),
                       )
                     : TextStyle(
-                        color: Color(int.parse(
-                                item['word_unselected_color'].substring(1, 7),
-                                radix: 16) +
-                            0xFF000000),
+                        color:
+                            Color(handleColor(item['word_unselected_color'])),
                       ),
               ),
             ),
-            onTap: () => _onItemTapped(item['page_id']),
+            onTap: () => _onItemTapped(item['page_type'], item['page_id']),
           ),
         ));
       }

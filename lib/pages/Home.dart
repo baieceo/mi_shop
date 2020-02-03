@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:mi_shop/components/HeaderNav.dart';
 import 'package:mi_shop/http/index.dart';
 import 'package:mi_shop/http/api.dart';
@@ -14,6 +15,9 @@ class Home extends StatefulWidget {
 
 class Page extends State<Home> {
   Map pageData = Map();
+  int pageId = 0;
+  String pageType = 'home';
+  bool loading = true;
 
   @override
   void initState() {
@@ -56,6 +60,9 @@ class Page extends State<Home> {
               ),
               Expanded(
                 child: new TextField(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/search');
+                  },
                   decoration: new InputDecoration(
                     hintText: '搜索商品名称',
                     hintStyle: new TextStyle(
@@ -86,48 +93,70 @@ class Page extends State<Home> {
   }
 
   Widget layout(BuildContext context) {
-    return new MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: new Scaffold(
-        body: Column(
-          children: <Widget>[
-            Expanded(
-              flex: 0,
-              child: topBar(context),
+    return new Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            flex: 0,
+            child: topBar(context),
+          ),
+          Expanded(
+            flex: 0,
+            child: new Nav(
+              tabs: pageData,
+              pageId: pageId,
+              onTap: (String type, int id) {
+                setState(() {
+                  pageId = id;
+                  pageType = type;
+                });
+
+                requestAPI();
+              },
             ),
-            Expanded(
-              flex: 0,
-              child: new Nav(
-                tabs: pageData,
-              ),
+          ),
+          Expanded(
+            flex: 1,
+            child: SingleChildScrollView(
+              child: loading == true
+                  ? new Container(
+                      height: 500,
+                      child: new Center(
+                        child: new Image(
+                          image: AssetImage('images/placeholder.png'),
+                        ),
+                      ),
+                    )
+                  : new Container(
+                      padding: EdgeInsets.only(bottom: 50),
+                      child: pageData['data'] != null &&
+                              pageData['data']['sections'] != null
+                          ? new PageRender(
+                              data: pageData['data']['sections'],
+                            )
+                          : new Container(),
+                    ),
             ),
-            Expanded(
-              flex: 1,
-              child: SingleChildScrollView(
-                child: new PageRender(
-                  data: pageData['data'] != null &&
-                          pageData['data']['sections'] != null
-                      ? pageData['data']['sections']
-                      : [],
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
   void requestAPI() async {
+    setState(() {
+      loading = true;
+    });
+
     var res = await Http.post(
       path: HOME_PAGE,
-      data: {
-        'page_type': 'home',
-      },
+      data: {'page_type': pageType, 'page_id': pageId.toString()},
     );
 
     setState(() {
       pageData = res;
+      loading = false;
     });
   }
 }
